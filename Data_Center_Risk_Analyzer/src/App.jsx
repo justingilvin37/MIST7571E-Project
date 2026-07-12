@@ -336,11 +336,22 @@ export default function App() {
         'Residents want water-system capacity, drought planning, and wastewater details before a zoning decision.'
     });
 
-    setContext(null);
+    setContext({
+      location: {
+        zip: '30040',
+        city: 'Cumming',
+        state: 'GA',
+        latitude: 34.2321,
+        longitude: -84.158
+      },
+      population: null,
+      county: { name: 'Forsyth County', fips: '13117' },
+      drought: { label: 'Moderate drought severity', dsci: 233, source: 'U.S. Drought Monitor county DSCI' },
+      weather: { label: 'Unavailable' },
+      sourceMode: 'local preview'
+    });
 
-    setBrief(
-      'Example loaded. Select Look Up ZIP to retrieve location context.'
-    );
+    setBrief('Example loaded. Location context applied for preview.');
 
     setStatus({
       loading: false,
