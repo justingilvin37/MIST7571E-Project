@@ -10,6 +10,13 @@ body { background: linear-gradient(180deg, #eef7f2 0%, #f8fbf9 100%); color: #17
 .metric { height: 100%; border: 1px solid #d8e4dc; border-radius: .7rem; background: #fbfdfc; padding: 1rem; }
 .metric span, .metric small { display: block; color: #65786d; font-size: .8rem; }.metric strong { display: block; margin: .35rem 0; color: #14563b; font-size: 1.05rem; overflow-wrap: anywhere; }
 .map-frame { width: 100%; min-height: 310px; border: 0; border-radius: .75rem; }
+
+.map-legend { background: #fff; border: 1px solid #d8e4dc; padding: .6rem; border-radius: .5rem; box-shadow: 0 4px 12px rgba(0,0,0,.06); font-size: .9rem; }
+.map-legend .legend-header { font-weight: 700; color: #14563b; margin-bottom: .4rem; }
+.map-legend .legend-body { color: #42564a; }
+.map-legend .legend-scale { margin-top: .5rem; }
+.map-legend .scale-row { display:flex; align-items:center; gap:.5rem; margin: .25rem 0; }
+.map-legend .scale-swatch { width:18px; height:12px; display:inline-block; border-radius:2px; border:1px solid rgba(0,0,0,.06); }
 .brief { white-space: pre-wrap; line-height: 1.65; border: 1px solid #d8e4dc; background: #fbfdfc; border-radius: .7rem; padding: 1rem; }
 @media print { .btn, .alert { display: none !important; } body { background: white; } .card { box-shadow: none !important; border: 1px solid #ddd; } }
 summary { cursor: pointer; list-style: none; }

@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import { calculateRisk, formatNumber } from './riskModel.js';
 import { useSavedScenarios } from './hooks/useSavedScenarios.js';
+import ZipLookupCard from './components/ZipLookupCard.jsx';
+import GenerateButton from './components/GenerateButton.jsx';
+import MapPanel from './components/MapPanel.jsx';
 
 const emptyProject = {
   scenario: 'location',
@@ -431,57 +434,13 @@ export default function App() {
 
       <div className="row g-4">
         <section className="col-12 col-lg-5">
-          <div className="card shadow-sm border-0 mb-4">
-            <div className="card-body p-4">
-              <div className="d-flex justify-content-between align-items-start gap-3">
-                <div>
-                  <h2 className="h4 mb-1">
-                    1. Find the community{' '}
-                    <span className="badge text-bg-success">Required</span>
-                  </h2>
-
-                  <p className="small text-secondary mb-3">
-                    A ZIP code is all you need to begin.
-                  </p>
-                </div>
-
-                <button
-                  className="btn btn-outline-success btn-sm"
-                  onClick={loadExample}
-                >
-                  Load Example
-                </button>
-              </div>
-
-              <label className="form-label fw-semibold" htmlFor="zip">
-                5-digit U.S. ZIP code
-              </label>
-
-              <div className="input-group">
-                <input
-                  id="zip"
-                  className="form-control"
-                  value={zip}
-                  onChange={(event) =>
-                    setZip(
-                      event.target.value.replace(/\D/g, '').slice(0, 5)
-                    )
-                  }
-                  placeholder="30040"
-                  inputMode="numeric"
-                  maxLength="5"
-                />
-
-                <button
-                  className="btn btn-success"
-                  onClick={lookupLocation}
-                  disabled={status.loading}
-                >
-                  Look Up ZIP
-                </button>
-              </div>
-            </div>
-          </div>
+          <ZipLookupCard
+            zip={zip}
+            setZip={setZip}
+            lookupLocation={lookupLocation}
+            loadExample={loadExample}
+            loading={status.loading}
+          />
 
           <div className="card shadow-sm border-0 mb-4">
             <div className="card-body p-4">
@@ -701,15 +660,12 @@ export default function App() {
             </div>
           </details>
 
-          <button
-            className="btn btn-success w-100 mb-4 py-2"
-            onClick={createBrief}
-            disabled={status.loading}
-          >
-            {project.scenario === 'location' && !risk.hasProposalData
-              ? 'Generate location-only brief'
-              : 'Generate community brief'}
-          </button>
+          <GenerateButton
+            createBrief={createBrief}
+            loading={status.loading}
+            project={project}
+            risk={risk}
+          />
         </section>
 
         <section className="col-12 col-lg-7">
@@ -777,19 +733,10 @@ export default function App() {
                     </div>
                   </div>
 
-                  <iframe
-                    className="map-frame"
-                    title="Approximate ZIP code location map"
-                    src={mapUrl}
-                    loading="lazy"
-                  />
+                  <MapPanel context={context} mapUrl={mapUrl} />
                 </>
               ) : (
-                <p className="text-secondary mb-0">
-                  Look up a ZIP code to show the approximate location, Census
-                  population context, drought context, and NOAA/NWS weather
-                  summary.
-                </p>
+                <MapPanel context={context} mapUrl={mapUrl} />
               )}
             </div>
           </div>
