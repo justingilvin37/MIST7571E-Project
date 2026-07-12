@@ -407,7 +407,7 @@ export default function App() {
         </h1>
 
         <p className="lead text-secondary mx-auto intro">
-          A community screening tool that combines ZIP-based public context,
+          A community screening tool that combines ZIP code-based public context,
           editable planning scenarios, and an OpenAI-generated plain-language
           brief.
         </p>
@@ -732,6 +732,23 @@ export default function App() {
                   ? 'A transparent screen using supplied or planning-default inputs. Defaults are not verified project facts.'
                   : 'Add a planning scenario or verified proposal data later to calculate a project screen.'}
               </p>
+              {risk.hasProposalData && (
+                <div className="mt-2 small text-secondary">
+                  <h3 className="h6 mb-1">Score assignment reasoning</h3>
+
+                  <ul className="mb-0">
+                    {risk.reasons.map((reason, index) => (
+                      <li key={index}>{reason}</li>
+                    ))}
+                  </ul>
+
+                  {risk.missingFields.length > 0 && (
+                    <p className="mt-2 mb-0">
+                      <strong>Additional information that may help improve this assessment score:</strong> {risk.missingFields.join(', ')}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 

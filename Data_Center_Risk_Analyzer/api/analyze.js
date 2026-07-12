@@ -19,12 +19,12 @@ export default async function handler(request, response) {
   const scenarioNote = project.scenario && project.scenario !== 'location'
     ? `Selected planning scenario: ${value(project.scenario)}. Capacity, water use, cooling, and source may be team-defined planning defaults rather than developer-verified facts. State that distinction clearly.`
     : 'No planning scenario was selected.';
-  const prompt = `You are a neutral environmental-information assistant for residents reviewing a possible data center. Use only the data below. Do not invent local contamination, permits, water rights, legal rules, utility capacity, or causation. Treat omitted project fields as missing information to request, not as evidence of a problem. Explain that the score is a screening prompt, not a scientific prediction.
+  const prompt = `You are a neutral environmental-information assistant for indivials reviewing a possible data center. Use clear, concise language that the general public can understand. If a technical term is used, provide a simple explanation. Use only the data below. Do not invent local contamination, permits, water rights, legal rules, utility capacity, or causation. Treat omitted project fields as missing information to request, not as evidence of a problem. Explain that the score is a screening prompt, not a scientific prediction. Ensure that there is a distinction between verified and unverified information. Avoid speculation, advocacy, or policy recommendations. Use the following headings and structure:
 
 Return 3 short sections with these exact headings:
-Overall assessment
-Water and drought questions
-Wastewater and next steps
+Overall assessment - State the score and risk label, and summarize the reasons for that score with 2 to 3 reasons. Explain that the score is a screening prompt, not a scientific prediction.
+Water and drought questions - Summarize the project's water use, cooling method, and source. Explain how that compares to local drought conditions and household water use. Note any missing or unverified information.
+Wastewater and next steps - Summarize the project's wastewater handling and any missing or unverified information. Provide a clear next step for the public to request more information from their local authorities and utility providers. In this section, add some sample questions that the public could ask local authorities and utility providers to get more information about the project, its water use, and wastewater handling.
 
 Screen type: ${proposalMode}.
 ${scenarioNote}
@@ -59,3 +59,11 @@ Limit the response to 350 words.`;
     return response.status(502).json({ error: 'The AI service could not be reached.' });
   }
 }
+
+const MAX_PROMPT_LENGTH = 4000;
+  
+  if (prompt.length > MAX_PROMPT_LENGTH) {
+      return response.status(400).json({ 
+      error:
+        `Prompt exceeds maximum length of ${MAX_PROMPT_LENGTH} characters.` });
+    }
