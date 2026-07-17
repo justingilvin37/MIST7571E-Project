@@ -1,0 +1,9 @@
+For this project, AI was used to generate some code, debug, and assist with errors. 
+A bigger error that we faced was that the risk score was initially not updating 
+whenever a new zip code was entered, so the app appeared frozen, when it was actually 
+a broken API connection. Additionally, AI was used to double check code when we broke 
+apart our App.jsx file into more components for cleaner code quality, as well as to 
+verify all relevant parts were cleaned up when removing some superfluous UI components.
+It was really helpful using the CoPilot plug in to Visual Studio because it could directly
+integrate into the code and provide step by step explanations on what an issue was 
+and how it was resolved. 
